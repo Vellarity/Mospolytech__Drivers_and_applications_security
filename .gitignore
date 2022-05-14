@@ -1,0 +1,11 @@
+.vs/
+
+Debug/
+
+x64/
+
+*.sys
+*.cer
+*.exe
+README.md
+RC*
