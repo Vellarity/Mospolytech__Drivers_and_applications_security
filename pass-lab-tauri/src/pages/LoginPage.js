@@ -41,7 +41,7 @@ export const LoginPage = observer(() =>{
 
                 await invoke("dev_write_data", {data:devEnc}) */
 
-               /* navigate("/mainList") */
+                navigate("/mainList")
 
                 faceRecLink.current.classList.remove("pointer-events-none")
                 faceRecLink.current.classList.remove("bg-red-400")
@@ -55,9 +55,9 @@ export const LoginPage = observer(() =>{
             <input onChange={(event) =>{setLogin(event.target.value)}} className="w-96 p-3 mb-9 text-2xl rounded-2xl" type="password"></input>
             <button onClick={()=>{CheckLogin(login)}} className="bg-purple-400 px-5 py-4 rounded-2xl font-semibold">Авторизоваться</button>
 
-            <Link ref={faceRecLink} className="no-underline bg-red-400 px-2 py-1 rounded-2xl font-semibold fixed bottom-1 right-1 pointer-events-none" to="/faceLog">
+            {/* <Link ref={faceRecLink} className="no-underline bg-red-400 px-2 py-1 rounded-2xl font-semibold fixed bottom-1 right-1 pointer-events-none" to="/faceLog">
                 <EYE width={"30px"}/>
-            </Link>
+            </Link> */}
         </div>
     )
 })
