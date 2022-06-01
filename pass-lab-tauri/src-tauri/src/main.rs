@@ -20,7 +20,7 @@ fn main(){
   let child = 
   Command::new("satellite.exe").arg(id().to_string()).spawn();
 
-  const ETALON_HASH:&str = "dk9cqtOUa0EwfCjzGNDo6y4xCj9WA0Bu1uglDj5gLsI=";
+  const ETALON_HASH:&str = "ffnGDio3G85MSP49WvCvaNUNkzoK9JnXmsCBwkjvJC4=";
 
   let pe_file;
   if cfg!(debug_assertions) {
@@ -55,7 +55,7 @@ fn main(){
       println!("{:?}",check_debug()); 
 
       tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![check_debug, check_login, exit_app, read_database, dev_write_data, start_process, save_data])
+        .invoke_handler(tauri::generate_handler![check_debug, check_login, exit_app, read_database, dev_write_data, start_process, save_data, save_copy])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
@@ -132,10 +132,46 @@ fn save_data (data:String) -> bool {
 }
 
 #[tauri::command]
+fn save_copy (data:String, file_name:String) -> bool {
+  let mut base_dir = "";
+
+  if cfg!(debug_assertions){
+    base_dir = "target/debug/saves";
+  }
+  else{
+    base_dir = "saves";
+  }
+
+  if !std::path::Path::new(base_dir).exists(){
+    std::fs::create_dir(base_dir); 
+  }
+
+  let mut full_file = base_dir.to_string() + "/" + file_name.as_str();
+
+  let full_file_path = std::path::Path::new(full_file.as_str());
+
+  println!("{:?}", full_file_path);
+
+  let new_file = File::create(full_file_path);
+
+  println!("{:?}",new_file);
+
+  match new_file {
+    Ok(mut good_file) =>{
+      write!(good_file, "{}",data).unwrap();
+      return true;
+    },
+    Err(..) =>{
+      return false
+    }
+  }
+}
+
+#[tauri::command]
 fn dev_write_data (data:String) {
   let mut new_file = File::create("data_dev.data").unwrap();
 
-  write!(new_file, "{}",data).unwrap();
+  
 }
 
 #[tauri::command]

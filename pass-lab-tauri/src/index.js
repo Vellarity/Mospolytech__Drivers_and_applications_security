@@ -10,7 +10,7 @@ import { AES } from "./helper/AES"
 import { invoke } from '@tauri-apps/api';
 
 
-appWindow.listen('tauri://close-requested', async (event,handler) =>{
+/* appWindow.listen('tauri://close-requested', async (event,handler) =>{
   if (Data.data.data.length !== 0){
     let pass = prompt("Введи пароль: ")
     let dataEnc = await AES().encrypt(JSON.stringify(Data.data), pass)
@@ -31,7 +31,7 @@ appWindow.listen('tauri://close-requested', async (event,handler) =>{
   else {
     appWindow.close()
   }
-})
+}) */
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
